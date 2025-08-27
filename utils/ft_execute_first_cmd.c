@@ -6,7 +6,7 @@
 /*   By: jromann <jromann@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 08:36:39 by jromann           #+#    #+#             */
-/*   Updated: 2025/08/26 19:29:06 by jromann          ###   ########.fr       */
+/*   Updated: 2025/08/27 12:54:44 by jromann          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	ft_execute_first_cmd(t_proc *proc, char **envp)
 		exit(1);
 	}
 	execve(path, proc->argvec1, envp);
+	free(path);
 	ft_cleanup(proc);
 	perror("execve");
 	exit(1);

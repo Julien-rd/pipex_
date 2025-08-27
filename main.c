@@ -6,7 +6,7 @@
 /*   By: jromann <jromann@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 08:36:52 by jromann           #+#    #+#             */
-/*   Updated: 2025/08/27 12:32:21 by jromann          ###   ########.fr       */
+/*   Updated: 2025/08/27 12:41:02 by jromann          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,12 @@ int	main(int argc, char *argv[], char **envp)
 	ft_initialize_values(proc, argv);
 	proc->child_proc1 = fork();
 	if (proc->child_proc1 == -1)
-	{
 		perror("fork");
-		ft_cleanup(proc);
-	}
 	if (proc->child_proc1 == 0)
 		ft_execute_first_cmd(proc, envp);
 	proc->child_proc2 = fork();
 	if (proc->child_proc2 == -1)
-	{
 		perror("fork");
-		ft_cleanup(proc);
-	}
 	if (proc->child_proc2 == 0)
 		ft_execute_second_cmd(proc, envp);
 	ft_close_fd(proc);
