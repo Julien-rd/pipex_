@@ -6,7 +6,7 @@
 /*   By: jromann <jromann@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 08:36:47 by jromann           #+#    #+#             */
-/*   Updated: 2025/08/25 09:00:40 by jromann          ###   ########.fr       */
+/*   Updated: 2025/08/26 18:01:42 by jromann          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ char	*ft_find_path(char *cmd, char **envp, t_proc *proc)
 	{
 		paths = ft_split(&envp[z][i], ':');
 		if (!paths)
-			ft_close_fd_free_mem(proc, 1);
+		{
+			ft_cleanup(proc);
+			exit(1);
+		}
 	}
 	return (ft_find_cmd(cmd, paths, proc));
 }

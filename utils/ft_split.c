@@ -6,7 +6,7 @@
 /*   By: jromann <jromann@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:46:40 by jromann           #+#    #+#             */
-/*   Updated: 2025/08/26 11:06:47 by jromann          ###   ########.fr       */
+/*   Updated: 2025/08/27 12:20:37 by jromann          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	ft_substrlen(char const *s1, char c)
 	return (length);
 }
 
-static char	*ft_create_array(int length, char **c, char const *s)
+static char	*ft_create_array(int length, char const *s)
 {
 	char	*arr;
 	int		k;
@@ -63,38 +63,29 @@ static char	*ft_create_array(int length, char **c, char const *s)
 	i = -1;
 	arr = (char *)malloc(sizeof(char) * length);
 	if (!arr)
-	{
-		while (c[++i])
-			free(c[i]);
-		free(c);
-		exit(1);
-	}
+		return (NULL);
 	while (--length > 0)
 		arr[++k] = s[index++];
 	arr[++k] = 0;
 	return (arr);
 }
 
-char	**ft_split(char const *s, char c)
+static	char **ft_wordforword(int wordcount, char const *s, char c, char **arr)
 {
-	int		wordcount;
-	int		i;
-	int		index;
-	int		length;
-	char	**arr;
+	int	i;
+	int	index;
+	int	length;
 
-	wordcount = ft_wordcount(s, c);
 	i = -1;
 	index = 0;
-	arr = (char **)malloc(sizeof(char *) * (wordcount + 1));
-	if (arr == NULL)
-		exit(1);
 	while (wordcount > 0)
 	{
 		length = ft_substrlen(&s[index], c);
 		if (length)
 		{
-			arr[++i] = ft_create_array(length, arr, &s[index]);
+			arr[++i] = ft_create_array(length, &s[index]);
+			if (!arr[i])
+				return (ft_free2d(arr), NULL);
 			wordcount--;
 			index += (length - 1);
 		}
@@ -102,4 +93,16 @@ char	**ft_split(char const *s, char c)
 	}
 	arr[++i] = NULL;
 	return (arr);
+}
+
+char	**ft_split(char const *s, char c)
+{
+	int		wordcount;
+	char	**arr;
+
+	wordcount = ft_wordcount(s, c);
+	arr = (char **)malloc(sizeof(char *) * (wordcount + 1));
+	if (arr == NULL)
+		return (NULL);
+	return (ft_wordforword(wordcount, s, c, arr));
 }

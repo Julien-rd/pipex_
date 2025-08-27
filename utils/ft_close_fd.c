@@ -1,35 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_execute_first_cmd.c                             :+:      :+:    :+:   */
+/*   ft_close_fd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jromann <jromann@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 08:36:39 by jromann           #+#    #+#             */
-/*   Updated: 2025/08/26 19:29:06 by jromann          ###   ########.fr       */
+/*   Created: 2025/08/26 19:15:02 by jromann           #+#    #+#             */
+/*   Updated: 2025/08/26 19:16:47 by jromann          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	ft_execute_first_cmd(t_proc *proc, char **envp)
+void	ft_close_fd(t_proc *proc)
 {
-	char	*path;
-
-	close(proc->pipe_fd[0]);
-	dup2(proc->io_fd[0], STDIN_FILENO);
-	dup2(proc->pipe_fd[1], STDOUT_FILENO);
-	close(proc->pipe_fd[1]);
-	close(proc->io_fd[0]);
-	close(proc->io_fd[1]);
-	path = ft_find_path(proc->argvec1[0], envp, proc);
-	if (!path)
+	if (proc->pipe_fd[0] != -1)
 	{
-		ft_cleanup(proc);
-		exit(1);
+		close(proc->pipe_fd[0]);
+		proc->pipe_fd[0] = -1;
 	}
-	execve(path, proc->argvec1, envp);
-	ft_cleanup(proc);
-	perror("execve");
-	exit(1);
+	if (proc->pipe_fd[1] != -1)
+	{
+		close(proc->pipe_fd[1]);
+		proc->pipe_fd[1] = -1;
+	}
+	if (proc->io_fd[0] != -1)
+    {
+		close(proc->io_fd[0]);
+        proc->io_fd[0] = -1;
+    }
+	if (proc->io_fd[1] != -1)
+    {
+		close(proc->io_fd[1]);
+        proc->io_fd[1] = -1;
+    }
 }
