@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jromann <jromann@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:46:40 by jromann           #+#    #+#             */
-/*   Updated: 2025/08/27 12:20:37 by jromann          ###   ########.fr       */
+/*   Updated: 2025/08/27 15:39:02 by jromann          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static int	ft_wordcount(char const *s, char c)
+static int	wordcounter(char const *s, char c)
 {
 	int	i;
 	int	b;
@@ -34,7 +34,7 @@ static int	ft_wordcount(char const *s, char c)
 	return (wordcount);
 }
 
-static int	ft_substrlen(char const *s1, char c)
+static int	substrlen(char const *s1, char c)
 {
 	int	i;
 	int	length;
@@ -50,7 +50,7 @@ static int	ft_substrlen(char const *s1, char c)
 	return (length);
 }
 
-static char	*ft_create_array(int length, char const *s)
+static char	*create_array(int length, char const *s)
 {
 	char	*arr;
 	int		k;
@@ -70,7 +70,7 @@ static char	*ft_create_array(int length, char const *s)
 	return (arr);
 }
 
-static	char **ft_wordforword(int wordcount, char const *s, char c, char **arr)
+static char	**wordforword(int wordcount, char const *s, char c, char **arr)
 {
 	int	i;
 	int	index;
@@ -80,12 +80,12 @@ static	char **ft_wordforword(int wordcount, char const *s, char c, char **arr)
 	index = 0;
 	while (wordcount > 0)
 	{
-		length = ft_substrlen(&s[index], c);
+		length = substrlen(&s[index], c);
 		if (length)
 		{
-			arr[++i] = ft_create_array(length, &s[index]);
+			arr[++i] = create_array(length, &s[index]);
 			if (!arr[i])
-				return (ft_free2d(arr), NULL);
+				return (free2d(arr), NULL);
 			wordcount--;
 			index += (length - 1);
 		}
@@ -95,14 +95,14 @@ static	char **ft_wordforword(int wordcount, char const *s, char c, char **arr)
 	return (arr);
 }
 
-char	**ft_split(char const *s, char c)
+char	**split(char const *s, char c)
 {
 	int		wordcount;
 	char	**arr;
 
-	wordcount = ft_wordcount(s, c);
+	wordcount = wordcounter(s, c);
 	arr = (char **)malloc(sizeof(char *) * (wordcount + 1));
 	if (arr == NULL)
 		return (NULL);
-	return (ft_wordforword(wordcount, s, c, arr));
+	return (wordforword(wordcount, s, c, arr));
 }

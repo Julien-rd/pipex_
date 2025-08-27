@@ -1,44 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   strlen.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jromann <jromann@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/24 10:10:54 by jromann           #+#    #+#             */
-/*   Updated: 2025/08/26 19:39:16 by jromann          ###   ########.fr       */
+/*   Created: 2025/03/19 09:14:20 by jromann           #+#    #+#             */
+/*   Updated: 2025/08/27 14:31:54 by jromann          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "ft_printf.h"
 
-static size_t	ft_strrlen(char *str)
+size_t	strlen(const char *s)
 {
 	size_t	i;
 
 	i = 0;
-	while (str[i])
+	while (s[i])
 		i++;
 	return (i);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2, char c)
-{
-	int		i;
-	int		k;
-	char	*ptr;
-
-	i = -1;
-	k = -1;
-	ptr = (char *)malloc(sizeof(char) * (ft_strrlen((char *)s1)
-				+ ft_strrlen((char *)s2) + 2));
-	if (ptr == NULL)
-		return (NULL);
-	while (s1[++i])
-		ptr[i] = s1[i];
-	ptr[i] = c;
-	while (s2[++k])
-		ptr[++i] = s2[k];
-	ptr[++i] = 0;
-	return (ptr);
 }

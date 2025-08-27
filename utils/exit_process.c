@@ -1,44 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_find_path.c                                     :+:      :+:    :+:   */
+/*   exit_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jromann <jromann@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 08:36:47 by jromann           #+#    #+#             */
-/*   Updated: 2025/08/26 18:01:42 by jromann          ###   ########.fr       */
+/*   Created: 2025/08/27 14:00:48 by jromann           #+#    #+#             */
+/*   Updated: 2025/08/27 15:38:51 by jromann          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*ft_find_path(char *cmd, char **envp, t_proc *proc)
+void	exit_process(int exit_code, char *error_msg, t_proc *proc)
 {
-	int		i;
-	int		z;
-	char	**paths;
-	char	*c;
-
-	c = "PATH=";
-	z = -1;
-	paths = NULL;
-	while (envp[++z])
-	{
-		i = -1;
-		while (++i < 5)
-			if (envp[z][i] != c[i])
-				break ;
-		if (i == 5)
-			break ;
-	}
-	if (envp && envp[z])
-	{
-		paths = ft_split(&envp[z][i], ':');
-		if (!paths)
-		{
-			ft_cleanup(proc);
-			exit(1);
-		}
-	}
-	return (ft_find_cmd(cmd, paths, proc));
+	errno = exit_code;
+	if (error_msg != NULL)
+		perror(error_msg);
+	if (proc)
+		cleanup(proc);
+	exit(exit_code);
 }

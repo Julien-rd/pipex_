@@ -6,7 +6,7 @@
 /*   By: jromann <jromann@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 08:56:46 by jromann           #+#    #+#             */
-/*   Updated: 2025/08/27 12:46:26 by jromann          ###   ########.fr       */
+/*   Updated: 2025/08/27 15:23:41 by jromann          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PIPEX_H
 
 # include "ft_printf.h"
+# include <errno.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -30,16 +31,17 @@ typedef struct s_proc
 	int		child_proc2;
 }			t_proc;
 
-char		**ft_split(char const *s, char c);
-char		*ft_find_cmd(char *cmd, char **paths, t_proc *proc);
-char		*ft_find_path(char *cmd, char **envp, t_proc *proc);
-char		*ft_strjoin(char const *s1, char const *s2, char c);
-void		ft_initialize_values(t_proc *proc, char **argv);
-void		ft_execute_second_cmd(t_proc *proc, char **envp);
-void		ft_execute_first_cmd(t_proc *proc, char **envp);
-void		ft_cleanup(t_proc *proc);
-void		ft_check_exit_codes(int status_1, int status_2, t_proc *proc);
-void		ft_close_fd(t_proc *proc);
-void		ft_free2d(char **str);
+char		**split(char const *s, char c);
+char		*find_cmd(char *cmd, char **paths, t_proc *proc);
+char		*find_path(char *cmd, char **envp, t_proc *proc);
+char		*strjoin(char const *s1, char const *s2, char c);
+void		initialize_values(t_proc *proc, char **argv);
+void		exit_process(int exit_code, char *error_msg, t_proc *proc);
+void		execute_second_cmd(t_proc *proc, char **envp);
+void		execute_first_cmd(t_proc *proc, char **envp);
+void		cleanup(t_proc *proc);
+void		check_exit_codes(t_proc *proc);
+void		close_fd(t_proc *proc);
+void		free2d(char **str);
 
 #endif

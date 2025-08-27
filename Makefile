@@ -8,21 +8,22 @@ UTILDIR = utils
 PRINTFDIR = printf
 
 SOURCES = $(SRCDIR)/main.c \
-          $(UTILDIR)/ft_cleanup.c \
-          $(UTILDIR)/ft_execute_first_cmd.c \
-          $(UTILDIR)/ft_execute_second_cmd.c \
-          $(UTILDIR)/ft_find_cmd.c \
-          $(UTILDIR)/ft_find_path.c \
-          $(UTILDIR)/ft_split.c \
-          $(UTILDIR)/ft_strjoin.c \
-          $(UTILDIR)/ft_free2d.c \
-          $(UTILDIR)/ft_initialize_values.c \
-          $(UTILDIR)/ft_check_exit_codes.c \
-          $(UTILDIR)/ft_close_fd.c \
+          $(UTILDIR)/cleanup.c \
+          $(UTILDIR)/execute_first_cmd.c \
+          $(UTILDIR)/execute_second_cmd.c \
+          $(UTILDIR)/find_cmd.c \
+          $(UTILDIR)/find_path.c \
+          $(UTILDIR)/split.c \
+          $(UTILDIR)/strjoin.c \
+          $(UTILDIR)/free2d.c \
+          $(UTILDIR)/initialize_values.c \
+          $(UTILDIR)/check_exit_codes.c \
+          $(UTILDIR)/close_fd.c \
+          $(UTILDIR)/exit_process.c \
           $(PRINTFDIR)/ft_printf.c \
-          $(PRINTFDIR)/ft_printf_utils.c \
-          $(PRINTFDIR)/ft_strlen.c \
-          $(PRINTFDIR)/ft_toupper.c
+          $(PRINTFDIR)/printf_utils.c \
+          $(PRINTFDIR)/strlen.c \
+          $(PRINTFDIR)/toupper.c
 
 OBJECTS = $(SOURCES:.c=.o)
 
