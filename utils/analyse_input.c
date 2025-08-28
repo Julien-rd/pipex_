@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_process.c                                     :+:      :+:    :+:   */
+/*   analyse_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jromann <jromann@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/27 14:00:48 by jromann           #+#    #+#             */
-/*   Updated: 2025/08/28 12:24:27 by jromann          ###   ########.fr       */
+/*   Created: 2025/08/27 16:59:40 by jromann           #+#    #+#             */
+/*   Updated: 2025/08/28 13:22:25 by jromann          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	exit_process(int errno_new, char *error_msg, t_proc *proc)
+void	analyse_input(char *cmd, t_proc *proc, char **envp)
 {
-	errno = errno_new;
-	if (error_msg != NULL)
-		perror(error_msg);
-	if (proc)
-		cleanup(proc);
-	exit(1);
+	int	i;
+
+	i = 0;
+	if (cmd == NULL)
+		exit_process(errno, NULL, proc);
+	while (cmd[i])
+	{
+		if (cmd[i] == '/')
+		{
+			execve(cmd, proc->argvec1, envp);
+			exit_process(errno, cmd, proc);
+		}
+		i++;
+	}
 }

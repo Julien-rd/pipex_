@@ -6,7 +6,7 @@
 /*   By: jromann <jromann@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 08:36:42 by jromann           #+#    #+#             */
-/*   Updated: 2025/08/27 15:38:35 by jromann          ###   ########.fr       */
+/*   Updated: 2025/08/28 13:21:14 by jromann          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	execute_second_cmd(t_proc *proc, char **envp)
 		exit_process(errno, "close failed", proc);
 	if (close(proc->io_fd[1]) < 0)
 		exit_process(errno, "close failed", proc);
+	analyse_input(proc->argvec2[0], proc, envp);
 	path = find_path(proc->argvec2[0], envp, proc);
 	if (!path)
 		exit_process(errno, NULL, proc);

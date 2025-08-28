@@ -15,9 +15,10 @@ SOURCES = $(SRCDIR)/main.c \
           $(UTILDIR)/find_path.c \
           $(UTILDIR)/split.c \
           $(UTILDIR)/strjoin.c \
+          $(UTILDIR)/analyse_input.c \
           $(UTILDIR)/free2d.c \
           $(UTILDIR)/initialize_values.c \
-          $(UTILDIR)/check_exit_codes.c \
+          $(UTILDIR)/check_exit_code.c \
           $(UTILDIR)/close_fd.c \
           $(UTILDIR)/exit_process.c \
           $(PRINTFDIR)/ft_printf.c \

@@ -6,7 +6,7 @@
 /*   By: jromann <jromann@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 08:36:39 by jromann           #+#    #+#             */
-/*   Updated: 2025/08/27 15:38:40 by jromann          ###   ########.fr       */
+/*   Updated: 2025/08/28 13:20:54 by jromann          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	execute_first_cmd(t_proc *proc, char **envp)
 {
 	char	*path;
-	int		k;
 
 	if (close(proc->pipe_fd[0]) < 0)
 		exit_process(errno, "close failed", proc);
@@ -29,11 +28,11 @@ void	execute_first_cmd(t_proc *proc, char **envp)
 		exit_process(errno, "close failed", proc);
 	if (close(proc->io_fd[1]) < 0)
 		exit_process(errno, "close failed", proc);
+	analyse_input(proc->argvec1[0], proc, envp);
 	path = find_path(proc->argvec1[0], envp, proc);
 	if (!path)
 		exit_process(errno, NULL, proc);
 	execve(path, proc->argvec1, envp);
-	k = errno;
 	free(path);
-	exit_process(k, "execve failed", proc);
+	exit_process(errno, "execve failed", proc);
 }
